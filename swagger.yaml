@@ -3,7 +3,7 @@ tags:
   description: users API
 
 paths:
-  /cars:
+  /cars/{mappingToUse}:
     post:
       tags:
       - users
@@ -20,6 +20,11 @@ paths:
         description: CSV file to upload
         required: true
         type: file
+      - name: mappingToUse
+        in: path
+        description: The mapping to use for the CSV file
+        required: true
+        type: string
       responses:
         201:
           description: 'Created'

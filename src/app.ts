@@ -12,6 +12,7 @@ import { dbConnection } from './databases';
 import { Routes } from './interfaces/routes.interface';
 import errorMiddleware from './middlewares/error.middleware';
 import { logger, stream } from './utils/logger';
+import CSVMappingService from './services/csvMapping.service';
 
 class App {
   public app: express.Application;
@@ -55,6 +56,35 @@ class App {
         logger.info(`======= ENV: ${this.env} =======`);
         logger.info(`🚀 Connected to database`);
         logger.info(`=================================`);
+
+        // Create CSV Mappings for testing
+        const csvMappingService = new CSVMappingService();
+        csvMappingService.addMapping({
+          MappingName: 'default',
+          UUID: 'UUID',
+          VIN: 'VIN',
+          make: 'make',
+          model: 'model',
+          mileage: 'mileage',
+          year: 'year',
+          price: 'price',
+          zipCode: 'zipCode',
+          createDate: 'createDate',
+          updateDate: 'updateDate',
+        });
+        csvMappingService.addMapping({
+          MappingName: 'acme',
+          UUID: 'vehicle_id',
+          VIN: 'vehicle_identification_number',
+          make: 'manufacturer',
+          model: 'car_model',
+          mileage: 'odometer_reading',
+          year: 'year_of_manufacture',
+          price: 'asking_price',
+          zipCode: 'zip_code',
+          createDate: 'date_added',
+          updateDate: 'date_updated',
+        });
       })
       .catch(error => {
         logger.error(`=================================`);

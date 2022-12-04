@@ -1,0 +1,2 @@
+vehicle_id,vehicle_identification_number,manufacturer,car_model,odometer_reading,year_of_manufacture,asking_price,zip_code,date_added,date_updated
+111-221-333,5XNZU3LA9FG123456,Ford,Fiesta,45000,2018,16000,98109,2022-05-01,2022-06-01

@@ -1,5 +1,5 @@
 import CarService from '../services/car.service';
-import { CSVMapping } from '../interfaces/csvSchema.interface';
+import { CSVMapping } from '../interfaces/csvMapping.interface';
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
 });
@@ -21,6 +21,7 @@ describe('Testing car mapping', () => {
         updateDate: '2022-06-01',
       };
       const schemaToUse: CSVMapping = {
+        MappingName: 'default',
         UUID: 'UUID',
         VIN: 'VIN',
         make: 'make',
@@ -50,6 +51,7 @@ describe('Testing car mapping', () => {
         date_updated: '2022-06-01',
       };
       const schemaToUse: CSVMapping = {
+        MappingName: 'ACME',
         UUID: 'vehicle_id',
         VIN: 'vehicle_identification_number',
         make: 'manufacturer',

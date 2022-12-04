@@ -4,7 +4,7 @@ import multer from 'multer';
 import { Routes } from '../interfaces/routes.interface';
 
 class CarRoute implements Routes {
-  public path = '/cars';
+  public path = '/cars/:mappingToUse';
   public router = Router();
   public carController = new CarController();
 

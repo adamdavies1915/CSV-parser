@@ -12,7 +12,7 @@ class CarController {
 
   public createCarFromCSV = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const cars: CreateCarDto[] = [];
+      const cars: Car[] = [];
 
       const readStream = fs.createReadStream(req.file.path);
 
@@ -20,31 +20,18 @@ class CarController {
       const parser = csv();
       readStream.pipe(parser);
 
-      const schemaToUse = req.params.schemaToUse;
-      const schema = await this.csvMappingService.getSchema(schemaToUse);
+      const mappingToUse = req.params.mappingToUse;
+      const schema = await this.csvMappingService.getMapping(mappingToUse);
 
       for await (const data of parser) {
-        const car = await this.carService.mapCSVDataToCarData(data, schema);
-
-        console.log(`Creating car: ${JSON.stringify(car)}`);
+        const carDto = await this.carService.mapCSVDataToCarData(data, schema);
 
         // Create a new car in the database - replace with mass insert
-        this.carService.createCar(car);
+        const car = await this.carService.createCar(carDto);
         cars.push(car);
       }
-      res.status(201).json({ data: 'CSV file successfully processed' });
-    } catch (error) {
-      next(error);
-    }
-  };
 
-  public createCar = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const carData: CreateCarDto = req.body;
-
-      const createCarData: Car = await this.carService.createCar(carData);
-
-      res.status(201).json({ data: createCarData, message: 'created' });
+      res.status(201).json({ message: 'CSV file successfully processed', data: cars });
     } catch (error) {
       next(error);
     }

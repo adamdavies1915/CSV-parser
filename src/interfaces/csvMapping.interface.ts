@@ -1,4 +1,5 @@
 export interface CSVMapping {
+  MappingName: string;
   UUID: string;
   VIN: string;
   make: string;

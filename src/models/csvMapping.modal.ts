@@ -1,4 +1,4 @@
-import { CSVMapping } from '@/interfaces/csvSchema.interface';
+import { CSVMapping } from '@/interfaces/csvMapping.interface';
 import { model, Schema, Document } from 'mongoose';
 
 const csvMapping: Schema = new Schema({
