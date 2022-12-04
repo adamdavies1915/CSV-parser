@@ -9,40 +9,30 @@ const carSchema: Schema = new Schema({
   },
   VIN: {
     type: String,
-    required: true,
-    unique: true,
   },
   make: {
     type: String,
-    required: true,
   },
   model: {
     type: String,
-    required: true,
   },
   mileage: {
     type: Number,
-    required: true,
   },
   year: {
     type: Number,
-    required: true,
   },
   price: {
     type: Number,
-    required: true,
   },
   zipCode: {
     type: String,
-    required: true,
   },
   createDate: {
     type: Date,
-    required: true,
   },
   updateDate: {
     type: Date,
-    required: true,
   },
 });
 

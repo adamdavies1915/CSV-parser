@@ -1,5 +1,6 @@
 import CarController from '@/controllers/car.controller';
 import { Router } from 'express';
+import multer from 'multer';
 import { Routes } from '../interfaces/routes.interface';
 
 class CarRoute implements Routes {
@@ -12,7 +13,8 @@ class CarRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}`, this.carController.createCar);
+    const upload = multer({ dest: 'uploads/' });
+    this.router.post(`${this.path}`, upload.single('file'), this.carController.createCarFromCSV);
   }
 }
 
