@@ -48,8 +48,21 @@ class App {
     if (this.env !== 'production') {
       set('debug', true);
     }
-
-    connect(dbConnection.url, dbConnection.options);
+    logger.info(`Connecting to database...`);
+    logger.info(`DB_URL: ${dbConnection.url}`);
+    connect(dbConnection.url)
+      .then(() => {
+        logger.info(`=================================`);
+        logger.info(`======= ENV: ${this.env} =======`);
+        logger.info(`🚀 Connected to database`);
+        logger.info(`=================================`);
+      })
+      .catch(error => {
+        logger.error(`=================================`);
+        logger.error(`======= ENV: ${this.env} =======`);
+        logger.error(`🚫 Error connecting to database: ${error}`);
+        logger.error(`=================================`);
+      });
   }
 
   private initializeMiddlewares() {
