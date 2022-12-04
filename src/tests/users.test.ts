@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import request from 'supertest';
-import App from '@/app';
-import { CreateUserDto } from '@dtos/users.dto';
-import UsersRoute from '@routes/users.route';
+import App from '../app';
+import { CreateUserDto } from '../dtos/users.dto';
+import UsersRoute from '../routes/users.route';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
@@ -33,7 +33,7 @@ describe('Testing Users', () => {
         },
       ]);
 
-      (mongoose as any).connect = jest.fn();
+      (mongoose as any).connect = jest.fn(() => Promise.resolve());
       const app = new App([usersRoute]);
       return request(app.getServer()).get(`${usersRoute.path}`).expect(200);
     });
@@ -52,7 +52,7 @@ describe('Testing Users', () => {
         password: await bcrypt.hash('q1w2e3r4!', 10),
       });
 
-      (mongoose as any).connect = jest.fn();
+      (mongoose as any).connect = jest.fn(() => Promise.resolve());
       const app = new App([usersRoute]);
       return request(app.getServer()).get(`${usersRoute.path}/${userId}`).expect(200);
     });
@@ -75,7 +75,7 @@ describe('Testing Users', () => {
         password: await bcrypt.hash(userData.password, 10),
       });
 
-      (mongoose as any).connect = jest.fn();
+      (mongoose as any).connect = jest.fn(() => Promise.resolve());
       const app = new App([usersRoute]);
       return request(app.getServer()).post(`${usersRoute.path}`).send(userData).expect(201);
     });
@@ -106,7 +106,7 @@ describe('Testing Users', () => {
         password: await bcrypt.hash(userData.password, 10),
       });
 
-      (mongoose as any).connect = jest.fn();
+      (mongoose as any).connect = jest.fn(() => Promise.resolve());
       const app = new App([usersRoute]);
       return request(app.getServer()).put(`${usersRoute.path}/${userId}`).send(userData);
     });
@@ -125,7 +125,7 @@ describe('Testing Users', () => {
         password: await bcrypt.hash('q1w2e3r4!', 10),
       });
 
-      (mongoose as any).connect = jest.fn();
+      (mongoose as any).connect = jest.fn(() => Promise.resolve());
       const app = new App([usersRoute]);
       return request(app.getServer()).delete(`${usersRoute.path}/${userId}`).expect(200);
     });
